@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # Copyright (c) 2013, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -62,7 +62,7 @@
 
 import sys,os
 import struct
-import StringIO
+import io
 from PIL import Image
 
 
@@ -90,7 +90,7 @@ def GetImgHeader(size):
     header[14]= ((height >> 16) & 0xFF)
     header[15]= ((height >> 24) & 0xFF)
 
-    output = StringIO.StringIO()
+    output = io.BytesIO()
     for i in header:
         output.write(struct.pack("B", i))
     content = output.getvalue()
@@ -105,7 +105,7 @@ def GetImgHeader(size):
 def CheckImage(mode):
     if mode == "RGB" or mode == "RGBA":
         return
-    print "error: need RGB or RGBA format with 8 bit depths"
+    print("error: need RGB or RGBA format with 8 bit depths")
     sys.exit()
 
 def GetImageBody(img):
@@ -119,7 +119,7 @@ def GetImageBody(img):
         background.paste(img, mask=img.split()[3]) # 3 is the alpha channel
         r, g, b = background.split()
 
-    return Image.merge("RGB",(b,g,r)).tostring()
+    return Image.merge("RGB",(b,g,r)).tobytes()
 
 
 ## make a image
@@ -136,7 +136,7 @@ def MakeLogoImage(logo, out):
 ## mian
 
 def ShowUsage():
-    print " usage: python logo_gen.py [logo.png]"
+    print(" usage: python logo_gen.py [logo.png]")
 
 def GetPNGFile():
     infile = "logo.png" #default file name

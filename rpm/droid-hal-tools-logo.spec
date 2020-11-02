@@ -1,28 +1,25 @@
-Name:    droid-hal-tools-logo	
+Name:    droid-hal-tools-logo
 Version: 0.0.1
 Release: 1
-Summary: splash.img creation tool	
-
-Group:   System
-License: MIT	
+Summary: splash.img creation tool
+License: MIT
 Source:	 %{name}-%{version}.tar.bz2
-
-Requires: python-imaging	
+Requires: python3-imaging
 
 %description
 %{summary}
 
 %prep
-%setup -q
+%autosetup
 
 %build
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/bin/
-install -D -m 755 logo_gen.py %{buildroot}/usr/bin/
+mkdir -p %{buildroot}%{_bindir}
+install -D -m 755 logo_gen.py %{buildroot}%{_bindir}
 
 %files
 %defattr(-,root,root,-)
-/usr/bin/logo_gen.py
+%{_bindir}/logo_gen.py
 
